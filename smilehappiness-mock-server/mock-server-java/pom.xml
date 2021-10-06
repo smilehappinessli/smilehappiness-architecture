@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>smilehappiness-mock-server</artifactId>
+        <groupId>com.smilehappiness</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mock-server-java</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0</version>
+    <description>基于Postman或者其他工具配置，虽然没有表里面配置直观，但是功能更加强大（可支持同一个接口，不同参数返回不同结果），也是不错的Mock Server，该模块也可以单独打jar包部署
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-netty</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>smilehappiness-architecture</artifactId>
+    <packaging>pom</packaging>
+    <name>smilehappiness-architecture</name>
+    <version>1.0.0</version>
+    <description>基础项目架构管理</description>
+
+    <parent>
+        <artifactId>smilehappiness-dependencies</artifactId>
+        <groupId>com.smilehappiness</groupId>
+        <version>1.0.0</version>
+        <relativePath>./smilehappiness-dependencies</relativePath>
+    </parent>
+
+
+    <!-- 打包 -->
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--                <version>2.3.12.RELEASE</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <goals>-->
+    <!--                            <goal>repackage</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+
+    <!--                &lt;!&ndash;<configuration>-->
+    <!--                    <includeSystemScope>true</includeSystemScope>-->
+    <!--                    <mainClass>xxx.xxx.xxx.xxx</mainClass>-->
+    <!--                </configuration>&ndash;&gt;-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash; 跳过单元测试 &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-surefire-plugin</artifactId>-->
+    <!--                <configuration>-->
+    <!--                    <skipTests>true</skipTests>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+
+    <!--        &lt;!&ndash; 将xml编译进Resources &ndash;&gt;-->
+    <!--        <resources>-->
+    <!--            <resource>-->
+    <!--                <directory>src/main/java</directory>-->
+    <!--                <includes>-->
+    <!--                    <include>**/*.yml</include>-->
+    <!--                    <include>**/*.yaml</include>-->
+    <!--                    <include>**/*.properties</include>-->
+    <!--                    <include>**/*.xml</include>-->
+    <!--                    <include>**/*.txt</include>-->
+    <!--                </includes>-->
+    <!--                <filtering>false</filtering>-->
+    <!--            </resource>-->
+    <!--            <resource>-->
+    <!--                <directory>src/main/resources</directory>-->
+    <!--                <includes>-->
+    <!--                    <include>**/*.yml</include>-->
+    <!--                    <include>**/*.yaml</include>-->
+    <!--                    <include>**/*.properties</include>-->
+    <!--                    <include>**/*.xml</include>-->
+    <!--                    <include>**/*.txt</include>-->
+    <!--                </includes>-->
+    <!--                <filtering>false</filtering>-->
+    <!--            </resource>-->
+    <!--        </resources>-->
+    <!--    </build>-->
+
+    <modules>
+        <module>smilehappiness-cache</module>
+        <module>smilehappiness-common</module>
+        <module>smilehappiness-dependencies</module>
+        <module>smilehappiness-exception</module>
+        <module>smilehappiness-mq</module>
+        <module>smilehappiness-operation-log</module>
+        <module>smilehappiness-schedule</module>
+        <module>smilehappiness-swagger-ui</module>
+        <module>smilehappiness-utils</module>
+        <module>smilehappiness-early-warning-notice</module>
+        <module>smilehappiness-limit-api</module>
+        <module>smilehappiness-mock-server</module>
+    </modules>
+
+</project>

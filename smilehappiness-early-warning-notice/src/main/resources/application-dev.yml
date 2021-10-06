@@ -1,0 +1,6 @@
+
+earlyWarning:
+  notice:
+    #钉钉预警
+    generalDingNoticeUrl: https://oapi.dingtalk.com/robot/send?access_token=ccbbb2c0c6c0b55297a90b6e9575251c768c28e0f52058c1140de8164da3066d
+    errorDingNoticeUrl: https://oapi.dingtalk.com/robot/send?access_token=ccbbb2c0c6c0b55297a90b6e9575251c768c28e0f52058c1140de8164da3066d

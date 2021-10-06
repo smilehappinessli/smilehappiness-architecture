@@ -1,0 +1,30 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: mock-server-java
+
+  profiles:
+    active: dev
+
+
+---
+spring:
+  profiles: dev
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 77a252d7-d2e7-41e1-ac33-0948c634458f
+        file-extension: yml
+        group: DEFAULT_GROUP
+        refresh-enabled: true
+      discovery:
+        server-addr: localhost:8848
+        namespace: 77a252d7-d2e7-41e1-ac33-0948c634458f
+        file-extension: yml
+
+logging:
+  config: classpath:logback/logback-dev.xml

@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: mock-server-database
+
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 77a252d7-d2e7-41e1-ac33-0948c634458f
+        file-extension: yml
+        group: DEFAULT_GROUP
+        refresh-enabled: true
+      discovery:
+        server-addr: localhost:8848
+        namespace: 77a252d7-d2e7-41e1-ac33-0948c634458f
+        file-extension: yml
+
+logging:
+  config: classpath:logback/logback-dev.xml
+
+---
+spring:
+  profiles: prod
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 3d3b5dfd-8d3b-4cc7-9fa4-47cd638b2e72
+        file-extension: yml
+        group: DEFAULT_GROUP
+        refresh-enabled: true
+      discovery:
+        namespace: 3d3b5dfd-8d3b-4cc7-9fa4-47cd638b2e72
+        server-addr: localhost:8848
+        file-extension: yml
+
+logging:
+  config: classpath:logback/logback-dev.xml

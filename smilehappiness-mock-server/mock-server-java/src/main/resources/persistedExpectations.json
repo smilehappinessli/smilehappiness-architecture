@@ -1,0 +1,23 @@
+[ {
+  "id" : "test_mock",
+  "priority" : 10,
+  "httpRequest" : {
+    "method" : "POST",
+    "path" : "/hello/mock"
+  },
+  "times" : {
+    "unlimited" : true
+  },
+  "timeToLive" : {
+    "unlimited" : true
+  },
+  "httpResponse" : {
+    "body" : {
+      "type" : "JSON",
+      "json" : {
+        "status" : 200,
+        "result" : "Welcome to mock server!"
+      }
+    }
+  }
+} ]
