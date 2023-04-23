@@ -1,0 +1,103 @@
+server:
+  port: 6689
+
+spring:
+  application:
+    name: seata-server
+
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: ${user.home}/logs/seata
+#  extend:
+#    logstash-appender:
+#      destination: 127.0.0.1:4560
+#    kafka-appender:
+#      bootstrap-servers: 127.0.0.1:9092
+#      topic: logback_to_logstash
+
+console:
+  user:
+    username: seata
+    password: seata
+
+seata:
+  config:
+    # support: nacos 、 consul 、 apollo 、 zk  、 etcd3
+    type: file
+  registry:
+    # support: nacos 、 eureka 、 redis 、 zk  、 consul 、 etcd3 、 sofa
+    type: file
+    # file field
+    preferred-networks: 30.240.*
+  server:
+    #If not configured, the default is '${server.port} + 1000'
+    #service-port: 8091
+    max-commit-retry-timeout: -1
+    max-rollback-retry-timeout: -1
+    rollback-retry-timeout-unlock-enable: false
+    enable-check-auth: true
+    enable-parallel-request-handle: true
+    retry-dead-threshold: 130000
+    xaer-nota-retry-timeout: 60000
+    recovery:
+      handle-all-session-period: 1000
+    undo:
+      log-save-days: 7
+      log-delete-period: 86400000
+    session:
+      #branch async remove queue size
+      branch-async-queue-size: 5000
+      #enable to asynchronous remove branchSession
+      enable-branch-async-remove: false
+  store:
+    # support: file 、 db 、 redis
+    mode: db
+    session:
+      mode: db
+    lock:
+      mode: db
+    #io.netty.handler.codec.TooLongFrameException: Adjusted frame length exceeds 8388608: 1345270062 - discarded
+    file:
+      dir: sessionStore
+      max-branch-session-size: 16384
+      max-global-session-size: 512
+      file-write-buffer-cache-size: 16384
+      session-reload-read-size: 100
+      flush-disk-mode: async
+    db:
+      branchTable: branch_table
+      # hikari or druid
+      datasource: hikari
+      dbType: mysql
+      distributedLockTable: distributed_lock
+      globalTable: global_table
+      lockTable: lock_table
+      maxConn: 30
+      maxWait: 5000
+      minConn: 5
+      queryLimit: 100
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: xxx/seata?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&allowMultiQueries=true
+      user: xxx
+      password: xxx
+
+  metrics:
+    enabled: false
+    registry-type: compact
+    exporter-list: prometheus
+    exporter-prometheus-port: 9898
+  transport:
+    rpc-tc-request-timeout: 30000
+    enable-tc-server-batch-send-response: false
+    shutdown:
+      wait: 3
+    thread-factory:
+      boss-thread-prefix: NettyBoss
+      worker-thread-prefix: NettyServerNIOWorker
+      boss-thread-size: 1
+  security:
+    secretKey: SeataSecretKey0c382ef121d778043159209298fd40bf5335jlkjlj53454j4jfdjfggj
+    tokenValidityInMilliseconds: 1800000
+    ignore:
+      urls: /,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/api/v1/auth/login

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.smilehappiness.process.mapper.BpmApplyMapper">
+
+    <!-- Common Query Mapping Results  -->
+    <resultMap id="BaseResultMap" type="cn.smilehappiness.process.model.BpmApply">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="biz_id" property="bizId"/>
+        <result column="biz_code" property="bizCode"/>
+        <result column="biz_param" property="bizParam"/>
+        <result column="bpm_model" property="bpmModel"/>
+        <result column="bpm_apply_time" property="bpmApplyTime"/>
+        <result column="bpm_commit_time" property="bpmCommitTime"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="ori_bpm_result" property="oriBpmResult"/>
+        <result column="out_bpm_result" property="outBpmResult"/>
+        <result column="notify_status" property="notifyStatus"/>
+        <result column="message" property="message"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="udf_1" property="udf1"/>
+        <result column="udf_2" property="udf2"/>
+        <result column="udf_3" property="udf3"/>
+    </resultMap>
+
+    <!-- Common query result column  -->
+    <sql id="Base_Column_List">
+        id
+        , user_id, biz_id, biz_code, biz_param, bpm_model, bpm_apply_time, bpm_commit_time, process_status, ori_bpm_result, out_bpm_result, notify_status, message, created_by, created_time, updated_by, updated_time, delete_by, delete_time, is_delete, version, remark, udf_1, udf_2, udf_3
+    </sql>
+
+    <sql id="BpmApplyEntity">
+        apply.udf_1 as udf1,
+        apply.id,
+        apply.user_id as userId,
+        apply.biz_id as bizId,
+        apply.biz_code as bizCode,
+        apply.biz_param as bizParam,
+        apply.bpm_model as bpmModel,
+        apply.bpm_apply_time as bpmApplyTime,
+        apply.bpm_commit_time as bpmCommitTime,
+        apply.process_status as processStatus,
+        apply.ori_bpm_result as oriBpmResult,
+        apply.out_bpm_result as outBpmResult,
+        apply.notify_status as notifySuccess
+    </sql>
+
+    <select id="queryBpmApplyByBizId" parameterType="java.lang.Object"
+            resultType="cn.smilehappiness.process.model.BpmApply">
+        SELECT
+        <include refid="BpmApplyEntity"/>
+        FROM bpm_apply apply
+        where is_delete=0
+        and apply.biz_id=#{bizId}
+        order by id desc limit 1
+    </select>
+
+    <select id="countBpmApplyByBizId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM bpm_apply apply
+        where apply.is_delete = 0
+          and apply.biz_id = #{bizId}
+    </select>
+
+    <insert id="addBpmApply" parameterType="java.lang.Object">
+        INSERT INTO bpm_apply (id,
+                               udf_1,
+                               user_id,
+                               biz_id,
+                               biz_code,
+                               biz_param,
+                               bpm_apply_time,
+                               process_status,
+                               notify_status)
+        VALUES (#{id},
+                #{udf1},
+                #{userId},
+                #{bizId},
+                #{bizCode},
+                #{bizParam},
+                now(),
+                #{processStatus},
+                #{notifySuccess})
+    </insert>
+
+    <select id="queryStrategyBpmApplyList" resultType="cn.smilehappiness.process.model.BpmApply">
+        SELECT
+        <include refid="BpmApplyEntity"/>
+        FROM
+        bpm_apply apply
+        where is_delete=0
+        and apply.process_status = '1'
+    </select>
+
+    <select id="queryProcessingBpmApplyList" resultType="cn.smilehappiness.process.model.BpmApply">
+        SELECT
+        <include refid="BpmApplyEntity"/>
+        FROM
+        bpm_apply apply
+        where is_delete=0
+        and apply.process_status in (${processStatus})
+        and apply.biz_code = #{bizCode}
+    </select>
+
+    <select id="queryNotifyBpmApplyList" resultType="cn.smilehappiness.process.model.BpmApply">
+        SELECT
+        <include refid="BpmApplyEntity"/>
+        FROM
+        bpm_apply apply
+        where is_delete=0
+        and apply.process_status = '4'
+        and apply.notify_status = 'N'
+        and apply.out_bpm_result is not null
+    </select>
+
+    <update id="updateBpmApplyNotifyResult" parameterType="java.lang.Object">
+        update bpm_apply
+        set notify_status = #{notifySuccess},
+            updated_time  = now()
+        where is_delete = 0
+          and biz_id = #{bizId}
+    </update>
+
+    <update id="updateStrategyToProcess" parameterType="java.lang.Object">
+        update bpm_apply
+        set process_status=#{processStatus},
+            bpm_model=#{bpmModel},
+            ori_bpm_result=#{bpmResult},
+            out_bpm_result=#{bpmResult},
+            updated_time  = now()
+        where is_delete = 0
+          and biz_id = #{bizId}
+    </update>
+
+    <update id="updateBpmApplyPass" parameterType="java.lang.Object">
+        update bpm_apply
+        set process_status=#{processStatus},
+            ori_bpm_result=#{bpmResult},
+            out_bpm_result=#{bpmResult},
+            message=#{message},
+            bpm_commit_time=now(),
+            updated_time = now()
+        where is_delete = 0
+          and biz_id = #{bizId}
+    </update>
+
+    <update id="updateBpmApplyReject" parameterType="java.lang.Object">
+        update bpm_apply
+        set message=#{message},
+            process_status=#{processStatus},
+            ori_bpm_result=#{bpmResult},
+            out_bpm_result=#{bpmResult},
+            bpm_commit_time=now(),
+            updated_time = now()
+        where is_delete = 0
+          and biz_id = #{bizId}
+    </update>
+
+    <update id="updateBpmApplyProcessStatus" parameterType="java.lang.Object">
+        update bpm_apply
+        set process_status=#{processStatus},
+            ori_bpm_result=#{bpmResult},
+            out_bpm_result=#{bpmResult},
+            updated_time  = now(),
+            message=#{message}
+        where is_delete = 0
+          and biz_id = #{bizId}
+    </update>
+
+
+    <update id="updateBpmApplyByStatus" parameterType="java.lang.Object">
+        update bpm_apply
+        set process_status=#{processStatus},
+        ori_bpm_result=#{bpmResult},
+        out_bpm_result=#{bpmResult},
+        message=#{message},
+        updated_time = now()
+        where
+        biz_id in
+        <foreach collection="bizIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+        <if test="processStatusCondition != null">
+            and process_status in
+            <foreach collection="processStatusCondition" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        and is_delete = 0
+    </update>
+
+    <update id="applyLock" parameterType="java.lang.Object">
+        update bpm_apply
+        set version=1
+        where is_delete = 0
+          and version = 0
+          and biz_id = #{bizId}
+    </update>
+
+    <update id="applyUnlock" parameterType="java.lang.Object">
+        update bpm_apply
+        set version=0
+        where is_delete = 0
+          and version = 1
+          and biz_id = #{bizId}
+    </update>
+
+</mapper>

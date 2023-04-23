@@ -5,35 +5,54 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>smilehappiness-dependencies</artifactId>
-        <groupId>com.smilehappiness</groupId>
-        <version>1.0.0</version>
-        <relativePath>../smilehappiness-dependencies</relativePath>
+        <groupId>cn.smilehappiness</groupId>
+        <artifactId>smilehappiness-architecture</artifactId>
+        <version>2.0.4-RELEASE</version>
     </parent>
 
     <artifactId>smilehappiness-cache</artifactId>
     <packaging>jar</packaging>
     <name>smilehappiness-cache</name>
-    <version>1.0.0</version>
-    <description>缓存管理</description>
+    <description>Cache management </description>
 
     <dependencies>
-        <!-- spring-data-redis -->
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-data-23</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--redisson(3.16.1),spring-data-redis(2.4.13),jedis(3.3.0)-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-data-23</artifactId>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.smilehappiness</groupId>
+            <artifactId>smilehappiness-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>cn.smilehappiness</groupId>
+                    <artifactId>smilehappiness-common-dependencies</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>cn.smilehappiness</groupId>
+            <artifactId>smilehappiness-exception</artifactId>
         </dependency>
     </dependencies>
 </project>

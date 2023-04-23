@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.smilehappiness.process.mapper.BpmProcessDataRecordMapper">
+
+    <!-- Common Query Mapping Results  -->
+    <resultMap id="BaseResultMap" type="cn.smilehappiness.process.model.BpmProcessDataRecord">
+        <id column="id" property="id"/>
+        <result column="biz_id" property="bizId"/>
+        <result column="field_name" property="fieldName"/>
+        <result column="field_type" property="fieldType"/>
+        <result column="field_value" property="fieldValue"/>
+        <result column="remark" property="remark"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="version" property="version"/>
+        <result column="udf_1" property="udf1"/>
+        <result column="udf_2" property="udf2"/>
+        <result column="udf_3" property="udf3"/>
+    </resultMap>
+
+    <!-- Common query result column  -->
+    <sql id="Base_Column_List">
+        id, biz_id, field_name, field_type, field_value, remark, created_by, created_time, updated_by, updated_time, delete_by, delete_time, is_delete, version, udf_1, udf_2, udf_3
+    </sql>
+
+
+    <select id="queryBpmProcessDataRecord" parameterType="java.lang.Object"
+            resultType="cn.smilehappiness.process.model.BpmProcessDataRecord">
+        SELECT data.id,
+               data.biz_id      as bizId,
+               data.field_name  as fieldName,
+               data.field_type  as fieldType,
+               data.field_value as fieldValue
+        from bpm_process_data_record data
+        where data.is_delete = 0
+          and data.biz_id = #{bizId}
+        order by data.id asc
+    </select>
+
+    <select id="queryBpmProcessDataRecordSingle" parameterType="java.lang.Object"
+            resultType="cn.smilehappiness.process.model.BpmProcessDataRecord">
+        SELECT data.id,
+        data.biz_id as bizId,
+        data.field_name as fieldName,
+        data.field_type as fieldType,
+        data.field_value as fieldValue
+        from bpm_process_data_record data
+        where data.is_delete = 0
+        and data.biz_id = #{bizId}
+        and data.field_name in
+        <foreach collection="fieldNameList" item="fieldName" index="index" open="(" close=")" separator=",">
+            #{fieldName}
+        </foreach>
+    </select>
+
+    <update id="updateBpmProcessDataRecordBatch" parameterType="java.util.List">
+        <foreach collection="dataRecordList" item="data" index="index" open="" close="" separator=";">
+            update bpm_process_data_record
+            set
+            field_value=#{data.fieldValue}
+            where
+            biz_id=#{data.bizId}
+            and field_name=#{data.fieldName}
+        </foreach>
+    </update>
+
+
+    <insert id="initProcessDataTemplate" parameterType="java.lang.Object">
+        INSERT INTO bpm_process_data_record (biz_id,
+                                             field_name,
+                                             field_type,
+                                             field_value,
+                                             remark,
+                                             created_by)
+        SELECT #{bizId},
+               field_name    as fieldName,
+               field_type    as fieldType,
+               default_value as defaultValue,
+               remark,
+               created_by
+        from bpm_process_data_template
+        where is_delete = 0
+          and bpm_model = #{bpmModel}
+          and #{bizId} not in
+              (select r.biz_id from bpm_process_data_record r where r.biz_id = #{bizId} and r.is_delete = 0)
+    </insert>
+
+    <insert id="initProcessDataTemplateBatch" parameterType="java.util.List">
+        INSERT INTO bpm_process_data_record (id,
+        biz_id,
+        field_name,
+        field_type,
+        field_value,
+        remark,
+        created_by
+        ) VALUES
+        <foreach collection="bpmProcessDataRecordList" item="item" index="" separator=",">
+            (#{item.id},#{item.bizId},#{item.fieldName},#{item.fieldType},#{item.fieldValue},#{item.remark},#{item.createdBy})
+        </foreach>
+    </insert>
+
+</mapper>

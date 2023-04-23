@@ -2,26 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>smilehappiness-dependencies</artifactId>
-        <groupId>com.smilehappiness</groupId>
-        <version>1.0.0</version>
-        <relativePath>../smilehappiness-dependencies</relativePath>
+        <groupId>cn.smilehappiness</groupId>
+        <artifactId>smilehappiness-architecture</artifactId>
+        <version>2.0.4-RELEASE</version>
     </parent>
 
     <artifactId>smilehappiness-mock-server</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.0</version>
-    <description>Mock Server管理</description>
+    <packaging>jar</packaging>
+    <description>Mock ServerService, this module can be deployed in jar package separately </description>
 
-    <modules>
-        <module>mock-server-database</module>
-        <module>mock-server-java</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-netty</artifactId>
+        </dependency>
+    </dependencies>
 
-    <!-- 打包 -->
+    <!-- pack  -->
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
@@ -37,16 +42,23 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Skip unit tests  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
         </plugins>
 
-        <!-- 将xml编译进Resources -->
+        <!-- Compile xml into Resources -->
         <resources>
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.yml</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.xml</include>
+                    <include>**/*.json</include>
                     <include>**/*.txt</include>
                 </includes>
                 <filtering>false</filtering>
@@ -55,12 +67,12 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.yml</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.xml</include>
+                    <include>**/*.json</include>
                     <include>**/*.txt</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
         </resources>
     </build>
+
 </project>

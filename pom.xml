@@ -6,87 +6,158 @@
     <artifactId>smilehappiness-architecture</artifactId>
     <packaging>pom</packaging>
     <name>smilehappiness-architecture</name>
-    <version>1.0.0</version>
-    <description>基础项目架构管理</description>
+    <version>2.0.4-RELEASE</version>
+    <description>Basic function project management</description>
 
     <parent>
-        <artifactId>smilehappiness-dependencies</artifactId>
-        <groupId>com.smilehappiness</groupId>
-        <version>1.0.0</version>
-        <relativePath>./smilehappiness-dependencies</relativePath>
+        <groupId>cn.smilehappiness</groupId>
+        <artifactId>smilehappiness-framework-parent</artifactId>
+        <version>2.0.4-RELEASE</version>
     </parent>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Compiler settings properties -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Maven properties -->
+        <maven.test.skip>false</maven.test.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <!-- Exclude all generated code -->
+        <sonar.exclusions>file:**/generated-sources/**,**/test/**</sonar.exclusions>
+        <smilehappiness-utils.version>2.0.3-RELEASE</smilehappiness-utils.version>
 
-    <!-- 打包 -->
-    <!--    <build>-->
-    <!--        <plugins>-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.springframework.boot</groupId>-->
-    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--                <version>2.3.12.RELEASE</version>-->
-    <!--                <executions>-->
-    <!--                    <execution>-->
-    <!--                        <goals>-->
-    <!--                            <goal>repackage</goal>-->
-    <!--                        </goals>-->
-    <!--                    </execution>-->
-    <!--                </executions>-->
+        <!-- Basic module version management  -->
+        <smilehappiness-all.version>2.0.4-RELEASE</smilehappiness-all.version>
+        <smilehappiness-cache.version>2.0.4-RELEASE</smilehappiness-cache.version>
+        <smilehappiness-common.version>2.0.4-RELEASE</smilehappiness-common.version>
+        <smilehappiness-common-dependencies.version>2.0.4-RELEASE</smilehappiness-common-dependencies.version>
+        <smilehappiness-distribute-id.version>2.0.4-RELEASE</smilehappiness-distribute-id.version>
+        <smilehappiness-early-warning-notice.version>2.0.4-RELEASE</smilehappiness-early-warning-notice.version>
+        <smilehappiness-exception.version>2.0.4-RELEASE</smilehappiness-exception.version>
+        <smilehappiness-language.version>2.0.4-RELEASE</smilehappiness-language.version>
+        <smilehappiness-limit-api.version>2.0.4-RELEASE</smilehappiness-limit-api.version>
+        <smilehappiness-mock-server.version>2.0.4-RELEASE</smilehappiness-mock-server.version>
+        <smilehappiness-mq.version>2.0.4-RELEASE</smilehappiness-mq.version>
+        <smilehappiness-operation-log.version>2.0.4-RELEASE</smilehappiness-operation-log.version>
+        <smilehappiness-process.version>2.0.4-RELEASE</smilehappiness-process.version>
+        <smilehappiness-schedule.version>2.0.4-RELEASE</smilehappiness-schedule.version>
+        <smilehappiness-seata.version>2.0.4-RELEASE</smilehappiness-seata.version>
+        <smilehappiness-security.version>2.0.4-RELEASE</smilehappiness-security.version>
+        <smilehappiness-swagger.version>2.0.4-RELEASE</smilehappiness-swagger.version>
+    </properties>
 
-    <!--                &lt;!&ndash;<configuration>-->
-    <!--                    <includeSystemScope>true</includeSystemScope>-->
-    <!--                    <mainClass>xxx.xxx.xxx.xxx</mainClass>-->
-    <!--                </configuration>&ndash;&gt;-->
-    <!--            </plugin>-->
-    <!--            &lt;!&ndash; 跳过单元测试 &ndash;&gt;-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                <artifactId>maven-surefire-plugin</artifactId>-->
-    <!--                <configuration>-->
-    <!--                    <skipTests>true</skipTests>-->
-    <!--                </configuration>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-
-    <!--        &lt;!&ndash; 将xml编译进Resources &ndash;&gt;-->
-    <!--        <resources>-->
-    <!--            <resource>-->
-    <!--                <directory>src/main/java</directory>-->
-    <!--                <includes>-->
-    <!--                    <include>**/*.yml</include>-->
-    <!--                    <include>**/*.yaml</include>-->
-    <!--                    <include>**/*.properties</include>-->
-    <!--                    <include>**/*.xml</include>-->
-    <!--                    <include>**/*.txt</include>-->
-    <!--                </includes>-->
-    <!--                <filtering>false</filtering>-->
-    <!--            </resource>-->
-    <!--            <resource>-->
-    <!--                <directory>src/main/resources</directory>-->
-    <!--                <includes>-->
-    <!--                    <include>**/*.yml</include>-->
-    <!--                    <include>**/*.yaml</include>-->
-    <!--                    <include>**/*.properties</include>-->
-    <!--                    <include>**/*.xml</include>-->
-    <!--                    <include>**/*.txt</include>-->
-    <!--                </includes>-->
-    <!--                <filtering>false</filtering>-->
-    <!--            </resource>-->
-    <!--        </resources>-->
-    <!--    </build>-->
+    <!-- All dependent version management of the project -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- ****************************  Basic module version management  ****************************   -->
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-all</artifactId>
+                <version>${smilehappiness-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-cache</artifactId>
+                <version>${smilehappiness-cache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-common</artifactId>
+                <version>${smilehappiness-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-common-dependencies</artifactId>
+                <version>${smilehappiness-common-dependencies.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-distribute-id</artifactId>
+                <version>${smilehappiness-distribute-id.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-early-warning-notice</artifactId>
+                <version>${smilehappiness-early-warning-notice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-exception</artifactId>
+                <version>${smilehappiness-exception.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-language</artifactId>
+                <version>${smilehappiness-language.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-limit-api</artifactId>
+                <version>${smilehappiness-limit-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-mock-server</artifactId>
+                <version>${smilehappiness-mock-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-mq</artifactId>
+                <version>${smilehappiness-mq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-operation-log</artifactId>
+                <version>${smilehappiness-operation-log.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-process</artifactId>
+                <version>${smilehappiness-process.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-schedule</artifactId>
+                <version>${smilehappiness-schedule.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-seata</artifactId>
+                <version>${smilehappiness-seata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-security</artifactId>
+                <version>${smilehappiness-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.smilehappiness</groupId>
+                <artifactId>smilehappiness-swagger-ui</artifactId>
+                <version>${smilehappiness-swagger.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <modules>
         <module>smilehappiness-cache</module>
         <module>smilehappiness-common</module>
-        <module>smilehappiness-dependencies</module>
         <module>smilehappiness-exception</module>
         <module>smilehappiness-mq</module>
         <module>smilehappiness-operation-log</module>
+        <module>smilehappiness-process</module>
         <module>smilehappiness-schedule</module>
         <module>smilehappiness-swagger-ui</module>
-        <module>smilehappiness-utils</module>
         <module>smilehappiness-early-warning-notice</module>
         <module>smilehappiness-limit-api</module>
         <module>smilehappiness-mock-server</module>
+        <module>smilehappiness-language</module>
+        <module>smilehappiness-common-dependencies</module>
+        <module>smilehappiness-distribute-id</module>
+        <module>smilehappiness-security</module>
+        <module>smilehappiness-seata</module>
+        <module>smilehappiness-all</module>
     </modules>
 
 </project>

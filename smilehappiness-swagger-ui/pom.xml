@@ -5,85 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>smilehappiness-dependencies</artifactId>
-        <groupId>com.smilehappiness</groupId>
-        <version>1.0.0</version>
-        <relativePath>../smilehappiness-dependencies</relativePath>
+        <groupId>cn.smilehappiness</groupId>
+        <artifactId>smilehappiness-architecture</artifactId>
+        <version>2.0.4-RELEASE</version>
     </parent>
 
     <artifactId>smilehappiness-swagger-ui</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
-    <description>Swagger-ui管理</description>
+    <description>Swagger-ui Administration</description>
 
     <dependencies>
-        <!--swagger-ui-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>byte-buddy</artifactId>
-                    <groupId>net.bytebuddy</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-beanutils</artifactId>
-                    <groupId>commons-beanutils</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-coreutils</artifactId>
-                    <groupId>com.github.fge</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>vavr</artifactId>
-                    <groupId>io.vavr</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.github.swagger2markup</groupId>
-            <artifactId>swagger2markup</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>swagger-models</artifactId>
-                    <groupId>io.swagger</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>asm</artifactId>
-                    <groupId>org.ow2.asm</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

@@ -1,0 +1,32 @@
+server:
+  port: 8666
+
+spring:
+  application:
+    name: mock-server-java
+
+  profiles:
+    active: dev
+
+
+---
+spring:
+  profiles: dev
+
+  cloud:
+    config:
+      #  Same configuration, local priority
+      override-none: true
+
+    nacos:
+      config:
+        server-addr: 101.132.130.249:8848
+        namespace: 5172cf51-f886-43ee-8093-15d41e8a79e7
+        file-extension: yml
+        group: DEFAULT_GROUP
+        prefix: mock-server-java
+        refresh-enabled: true
+      discovery:
+        server-addr: 101.132.130.249:8848
+        namespace: 5172cf51-f886-43ee-8093-15d41e8a79e7
+        file-extension: yml

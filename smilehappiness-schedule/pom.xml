@@ -5,16 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>smilehappiness-dependencies</artifactId>
-        <groupId>com.smilehappiness</groupId>
-        <version>1.0.0</version>
-        <relativePath>../smilehappiness-dependencies</relativePath>
+        <groupId>cn.smilehappiness</groupId>
+        <artifactId>smilehappiness-architecture</artifactId>
+        <version>2.0.4-RELEASE</version>
     </parent>
 
     <artifactId>smilehappiness-schedule</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
-    <description>定时任务管理</description>
+    <description>Scheduled task management </description>
 
     <dependencies>
         <dependency>

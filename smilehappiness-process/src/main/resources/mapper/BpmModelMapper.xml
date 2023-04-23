@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.smilehappiness.process.mapper.BpmModelMapper">
+
+    <!-- Common Query Mapping Results  -->
+    <resultMap id="BaseResultMap" type="cn.smilehappiness.process.model.BpmModel">
+        <id column="id" property="id"/>
+        <result column="bpm_model" property="bpmModel"/>
+        <result column="online_time" property="onlineTime"/>
+        <result column="bpm_config" property="bpmConfig"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="udf_1" property="udf1"/>
+        <result column="udf_2" property="udf2"/>
+        <result column="udf_3" property="udf3"/>
+    </resultMap>
+
+    <!-- Common query result column  -->
+    <sql id="Base_Column_List">
+        id, bpm_model, online_time, bpm_config, created_by, created_time, updated_by, updated_time, delete_by, delete_time, is_delete, version, remark, udf_1, udf_2, udf_3
+    </sql>
+
+    <select id="queryBpmModelByBpmModel" parameterType="java.lang.Object"
+            resultType="cn.smilehappiness.process.model.BpmModel">
+        SELECT bpm.id,
+               bpm.bpm_model   as bpmModel,
+               bpm.online_time as onlineTime,
+               bpm.bpm_config  as bpmConfig
+        from bpm_model bpm
+        where bpm.is_delete = 0
+          and bpm_model = #{bpmModel}
+    </select>
+
+    <select id="queryBpmModelByBizId" parameterType="java.lang.Object"
+            resultType="cn.smilehappiness.process.model.BpmModel">
+        SELECT bpm.id,
+               bpm.bpm_model   AS bpmModel,
+               bpm.online_time AS onlineTime,
+               bpm.bpm_config  AS bpmConfig
+        FROM bpm_model bpm
+                 join
+             bpm_apply apply
+             on bpm.bpm_model = apply.bpm_model
+        WHERE bpm.is_delete = 0
+          and apply.is_delete = 0
+          AND apply.biz_id = #{bizId}
+    </select>
+
+    <select id="countBpmModelByBizId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM bpm_model bpm
+                 join
+             bpm_apply apply
+             on bpm.bpm_model = apply.bpm_model
+        WHERE bpm.is_delete = 0
+          and apply.is_delete = 0
+          AND apply.biz_id = #{bizId}
+    </select>
+
+</mapper>
